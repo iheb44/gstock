@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'DB/user.dart';
+import 'DB/userdatabase.dart';
 
 class singup extends StatefulWidget {
   @override
@@ -40,24 +42,10 @@ class _singup extends State<singup> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: "Phone"),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return "phone is required";
-                  }
-                  return null;
-                },
-                onChanged: (String? value) {
-                  setState(() {
-                    phone = value.toString();
-                  });
-                },
-              ),
-              TextFormField(
                 decoration: InputDecoration(labelText: "password"),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "password is required";
+                    return "phone is required";
                   }
                   return null;
                 },
@@ -67,19 +55,53 @@ class _singup extends State<singup> {
                   });
                 },
               ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    print(_username);
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Sumbimited")),
-                      );
-                    }
-                  },
-                  child: const Text('Submit'),
-                ),
+              TextFormField(
+                decoration: InputDecoration(labelText: "phone"),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "password is required";
+                  }
+                  return null;
+                },
+                onChanged: (String? value) {
+                  setState(() {
+                    phone = value.toString();
+                  });
+                },
               ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_username);
+                      if (_formKey.currentState!.validate()) {
+                        User a = new User(
+                            username: _username,
+                            password: password,
+                            phone: phone);
+                        userDatabase.instance.create(a);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Sumbimited")),
+                        );
+                      }
+                    },
+                    child: const Text('instert'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      print(_username);
+
+                      User ab =
+                          await userDatabase.instance.getbyUsername(_username);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("${ab.password}")),
+                      );
+                    },
+                    child: const Text('Pull'),
+                  ),
+                ],
+              )
             ],
           ),
         ),
