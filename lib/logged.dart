@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'DB/user.dart';
-import 'DB/userdatabase.dart';
+
 
 class loged extends StatefulWidget {
   @override
@@ -16,19 +15,31 @@ class _loged extends State<loged> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          //backgroundColor: Colors.teal,
-          title: Text("logged"),
-        ),
-        body: Center(
-            child: Column(children: [
-          Text("you are logged in"),
-          TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/');
-              },
-              child: Text("logout"))
-        ])));
+    return WillPopScope(
+        onWillPop: ()
+    async {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('The System Back Button is Deactivated')));
+      return false;
+    },
+    child: Scaffold(
+    appBar: AppBar(
+      automaticallyImplyLeading: false,
+    //backgroundColor: Colors.teal,
+    title: Text("logged"),
+    ),
+    body: Center(
+    child: Column(children: [
+    Text("you are logged in"),
+    TextButton(
+    onPressed: () {
+    Navigator.pushNamed(context, '/');
+    },
+    child: Text("logout"))
+    ]
+    )
+    )
+    )
+    );
   }
 }

@@ -29,10 +29,10 @@ class _login extends State<login> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: "Email"),
+                decoration: InputDecoration(labelText: "Username"),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "Email is required";
+                    return "Username is required";
                   }
                   return null;
                 },

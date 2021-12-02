@@ -12,7 +12,10 @@ class _singup extends State<singup> {
 
   String _username = "";
   String phone = "";
+  String phone2 = "";
   String password = "";
+  String firstName = "";
+  String lastName = "";
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +45,10 @@ class _singup extends State<singup> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: "password"),
+                decoration: InputDecoration(labelText: "Password"),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "phone is required";
+                    return "Password is required";
                   }
                   return null;
                 },
@@ -56,16 +59,58 @@ class _singup extends State<singup> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: "phone"),
+                decoration: InputDecoration(labelText: "Phone"),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "password is required";
+                    return "phone is required";
                   }
                   return null;
                 },
                 onChanged: (String? value) {
                   setState(() {
                     phone = value.toString();
+                  });
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: "Phone2"),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Phone2 is required";
+                  }
+                  return null;
+                },
+                onChanged: (String? value) {
+                  setState(() {
+                    phone2 = value.toString();
+                  });
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: "First name"),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "First name is required";
+                  }
+                  return null;
+                },
+                onChanged: (String? value) {
+                  setState(() {
+                    firstName = value.toString();
+                  });
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: "Last Name"),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Familly name is required";
+                  }
+                  return null;
+                },
+                onChanged: (String? value) {
+                  setState(() {
+                    lastName = value.toString();
                   });
                 },
               ),
@@ -81,7 +126,11 @@ class _singup extends State<singup> {
                           User a = new User(
                               username: _username,
                               password: password,
-                              phone: phone);
+                              phone: phone,
+                              phone2 : phone2,
+                              firstName : firstName,
+                              lastName : lastName
+                          );
                           userDatabase.instance.create(a);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("Sumbimited")),

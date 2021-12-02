@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'user.dart';
 
 class userDatabase {
@@ -13,7 +11,7 @@ class userDatabase {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('users.db');
+    _database = await _initDB('user1.db');
     return _database!;
   }
 
@@ -32,7 +30,10 @@ class userDatabase {
       ${Userfiled.id} $idType,
       ${Userfiled.username} $textType,
       ${Userfiled.password} $textType,
-      ${Userfiled.phone} $textType
+      ${Userfiled.phone} $textType,
+      ${Userfiled.phone2} $textType,
+      ${Userfiled.firstName} $textType,
+      ${Userfiled.lastName} $textType
 
     )''');
   }
