@@ -25,25 +25,24 @@ class userDatabase {
 
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    final textType = 'TEXT';
+    final textType = 'TEXT NOT NULL';
 
-    await db.execute('''CREATE TABLE $tableUsers ( 
+    await db.execute('''
+    CREATE TABLE $tableUsers ( 
       ${Userfiled.id} $idType,
       ${Userfiled.username} $textType,
       ${Userfiled.password} $textType,
-      ${Userfiled.phone} $textType,
+      ${Userfiled.phone} $textType
 
     )''');
   }
 
   Future<User> getbyUsername(String Username) async {
     final db = await instance.database;
-    final maps = await db.query(
-      tableUsers,
-      columns: Userfiled.values,
-      where: '  ${Userfiled.username} = admin',
-      whereArgs: [Username],
-    );
+    final maps = await db.query(tableUsers,
+        columns: Userfiled.values,
+        where: '  ${Userfiled.username} = ?',
+        whereArgs: [Username]);
     if (maps.isNotEmpty) {
       return User.fromJson(maps.first);
     } else {

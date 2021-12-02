@@ -1,4 +1,4 @@
-final String tableUsers = 'Users';
+final String tableUsers = 'users';
 
 class Userfiled {
   static final List<String> values = [id, username, password, phone];
