@@ -37,12 +37,12 @@ class userDatabase {
     )''');
   }
 
-  Future<User> getbyUsername(String Username) async {
+  Future<User> getbyUsername(String Username, String pass) async {
     final db = await instance.database;
     final maps = await db.query(tableUsers,
         columns: Userfiled.values,
-        where: '  ${Userfiled.username} = ?',
-        whereArgs: [Username]);
+        where: '  ${Userfiled.username} = ? and ${Userfiled.password} = ?',
+        whereArgs: [Username, pass]);
     if (maps.isNotEmpty) {
       return User.fromJson(maps.first);
     } else {

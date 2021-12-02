@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'DB/user.dart';
 import 'DB/userdatabase.dart';
 
-class singup extends StatefulWidget {
+class login extends StatefulWidget {
   @override
-  State<singup> createState() => _singup();
+  State<login> createState() => _login();
 }
 
-class _singup extends State<singup> {
+class _login extends State<login> {
   final _formKey = GlobalKey<FormState>();
 
   String _username = "";
@@ -18,10 +18,11 @@ class _singup extends State<singup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sing Up"),
+        //backgroundColor: Colors.teal,
+        title: Text("Login"),
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+        padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
         child: Form(
           key: _formKey,
           child: Column(
@@ -55,47 +56,25 @@ class _singup extends State<singup> {
                   });
                 },
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "phone"),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return "password is required";
-                  }
-                  return null;
-                },
-                onChanged: (String? value) {
-                  setState(() {
-                    phone = value.toString();
-                  });
-                },
-              ),
-              Flexible(
-                flex: 1,
-                fit: FlexFit.tight,
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                 child: Center(
                     child: Column(
                   children: [
                     ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          User a = new User(
-                              username: _username,
-                              password: password,
-                              phone: phone);
-                          userDatabase.instance.create(a);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Sumbimited")),
-                          );
-                        }
+                      onPressed: () async {
+                        User ab = await userDatabase.instance
+                            .getbyUsername(_username, password);
+                        Navigator.pushNamed(context, '/logged');
                       },
-                      child: const Text('Sing-up'),
+                      child: const Text('Login'),
                     ),
-                    Text("Got a Account?"),
+                    Text('You dont have a account ?'),
                     TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/singup');
                         },
-                        child: Text('Login'))
+                        child: Text("Singup here"))
                   ],
                 )),
               ),
