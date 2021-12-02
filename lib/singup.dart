@@ -10,7 +10,7 @@ class singup extends StatefulWidget {
 class _singup extends State<singup> {
   final _formKey = GlobalKey<FormState>();
 
-  String _username = "z";
+  String _username = "";
   String phone = "";
   String password = "";
 
@@ -89,8 +89,6 @@ class _singup extends State<singup> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      print(_username);
-
                       User ab =
                           await userDatabase.instance.getbyUsername(_username);
 
