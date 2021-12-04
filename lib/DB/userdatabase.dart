@@ -1,5 +1,7 @@
+import 'package:gstock/insertct.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'componentsType.dart';
 import 'user.dart';
 
 class userDatabase {
@@ -11,7 +13,7 @@ class userDatabase {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('user1.db');
+    _database = await _initDB('test.db');
     return _database!;
   }
 
@@ -36,6 +38,11 @@ class userDatabase {
       ${Userfiled.lastName} $textType
 
     )''');
+    await db.execute('''
+       create table $componentsTypeTable (
+        ${componentsTypeField.id} $idType,
+        ${componentsTypeField.type} $textType
+       )''');
   }
 
   Future<User> getbyUsername(String Username, String pass) async {
@@ -61,5 +68,11 @@ class userDatabase {
 
     final id = await db.insert(tableUsers, User.toJson());
     return User.copy(id: id);
+  }
+  Future<componentsType> createComponentsType(componentsType ct) async {
+    final db = await instance.database;
+
+    final id = await db.insert(componentsTypeTable, ct.toJsonct());
+    return ct.copyct(id: id);
   }
 }

@@ -9,8 +9,6 @@ class Userfiled {
   static final String phone2 = 'phone2';
   static final String firstName = 'firstName';
   static final String lastName = 'lastName';
-
-
 }
 
 class User {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gstock/login.dart';
+import 'insertct.dart';
 import 'singup.dart';
 import 'logged.dart';
 
@@ -15,6 +16,7 @@ void main() {
         '/': (context) => login(),
         '/singup': (context) => singup(),
         '/logged': (context) => loged(),
+        '/componentsType' : (context) => insertct()
       },
     ),
   );

@@ -24,7 +24,7 @@ class _loged extends State<loged> {
     },
     child: Scaffold(
     appBar: AppBar(
-      automaticallyImplyLeading: false,
+      // automaticallyImplyLeading: false,
     //backgroundColor: Colors.teal,
     title: Text("logged"),
     ),
@@ -38,6 +38,38 @@ class _loged extends State<loged> {
     child: Text("logout"))
     ]
     )
+    ),
+      drawer: Drawer(
+    // Add a ListView to the drawer. This ensures the user can scroll
+    // through the options in the drawer if there isn't enough vertical
+    // space to fit everything.
+    child: ListView(
+    // Important: Remove any padding from the ListView.
+    padding: EdgeInsets.zero,
+      children: [
+        const DrawerHeader(
+          decoration: BoxDecoration(
+            color: Colors.blue,
+          ),
+          child: Text('Drawer Header'),
+        ),
+        ListTile(
+          title: const Text('componentsType'),
+          onTap: () {
+            Navigator.pushNamed(context, '/componentsType');
+          },
+        ),
+        ListTile(
+          title: const Text('Item 2'),
+          onTap: () {
+            // Update the state of the app
+            // ...
+            // Then close the drawer
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    ),
     )
     )
     );
