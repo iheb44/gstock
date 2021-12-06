@@ -54,7 +54,7 @@ class userDatabase {
               ${componentsField.name} $textType,
               ${componentsField.date} $textType,
               ${componentsField.quntity} $textType,
-              FOREIGN KEY (type) REFERENCES user (id)
+              FOREIGN KEY (type) REFERENCES componentsType (id)
                 ON DELETE NO ACTION ON UPDATE NO ACTION
             )''');
   }
