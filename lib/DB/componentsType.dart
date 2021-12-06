@@ -1,4 +1,3 @@
-
 final String componentsTypeTable = 'componentsType';
 
 class componentsTypeField {
