@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gstock/login.dart';
+import 'package:gstock/root_generator.dart';
 import 'insertct.dart';
 import 'singup.dart';
 import 'logged.dart';
@@ -12,12 +13,7 @@ void main() {
         primarySwatch: Colors.teal,
       ),
       initialRoute: '/',
-      routes: {
-        '/': (context) => login(),
-        '/singup': (context) => singup(),
-        '/logged': (context) => loged(),
-        '/componentsType' : (context) => insertct()
-      },
+      onGenerateRoute: RouteGenerator.generateRoute,
     ),
   );
 }

@@ -65,7 +65,7 @@ class _login extends State<login> {
                       onPressed: () async {
                         User ab = await userDatabase.instance
                             .getbyUsername(_username, password);
-                        Navigator.pushNamed(context, '/logged');
+                        Navigator.pushReplacementNamed(context, '/logged');
                       },
                       child: const Text('Login'),
                     ),
