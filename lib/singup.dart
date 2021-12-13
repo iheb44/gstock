@@ -23,11 +23,11 @@ class _singup extends State<singup> {
       appBar: AppBar(
         title: Text("Sing Up"),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-          child: Form(
-            key: _formKey,
+      body: Container(
+        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -115,39 +115,35 @@ class _singup extends State<singup> {
                     });
                   },
                 ),
-                Flexible(
-                  flex: 1,
-                  fit: FlexFit.tight,
-                  child: Center(
-                      child: Column(
-                    children: [
-                      ElevatedButton(
+                Center(
+                    child: Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          User a = new User(
+                              username: _username,
+                              password: password,
+                              phone: phone,
+                              phone2: phone2,
+                              firstName: firstName,
+                              lastName: lastName);
+                          userDatabase.instance.create(a);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Sumbimited")),
+                          );
+                        }
+                      },
+                      child: const Text('Sing-up'),
+                    ),
+                    Text("Got a Account?"),
+                    TextButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            User a = new User(
-                                username: _username,
-                                password: password,
-                                phone: phone,
-                                phone2: phone2,
-                                firstName: firstName,
-                                lastName: lastName);
-                            userDatabase.instance.create(a);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Sumbimited")),
-                            );
-                          }
+                          Navigator.pop(context);
                         },
-                        child: const Text('Sing-up'),
-                      ),
-                      Text("Got a Account?"),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Login'))
-                    ],
-                  )),
-                ),
+                        child: Text('Login'))
+                  ],
+                )),
               ],
             ),
           ),
