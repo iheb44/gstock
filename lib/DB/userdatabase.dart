@@ -30,8 +30,7 @@ class userDatabase {
     final textType = 'TEXT NOT NULL';
     final intType = 'INTEGER NOT NULL';
 
-    await db.execute('''
-    CREATE TABLE $tableUsers ( 
+    await db.execute('''CREATE TABLE $tableUsers ( 
       ${Userfiled.id} $idType,
       ${Userfiled.username} $textType,
       ${Userfiled.password} $textType,
@@ -47,18 +46,15 @@ class userDatabase {
         ${componentsTypeField.type} $textType
        )''');
 
-    await db.execute('''
-            CREATE TABLE $componentsTable (
+    await db.execute('''CREATE TABLE $componentsTable (
               ${componentsField.id} $idType ,
-              ${componentsField.type}, $intType
+              ${componentsField.type}, $intType,
               ${componentsField.name} $textType,
               ${componentsField.date} $textType,
               ${componentsField.quntity} $textType,
-              FOREIGN KEY (type) REFERENCES componentsType (id)
-                ON DELETE NO ACTION ON UPDATE NO ACTION
-            )''');
+              FOREIGN KEY (id_com) REFERENCES componentsType (id)
+                ON DELETE NO ACTION ON UPDATE NO ACTION)''');
   }
-
 
   Future<User> getbyUsername(String Username, String pass) async {
     final db = await instance.database;
