@@ -95,9 +95,15 @@ class userDatabase {
 
   Future<List> getTrashlist() async {
     final db = await instance.database;
-    final result = await db.rawQuery('''SELECT ${componentsField.type} 
-      FROM ${componentsTable},${componentsTypeTable}
-      WHERE ${componentsField.type} = ${componentsTypeField.id}''');
+    final result = await db.rawQuery('''SELECT ${componentsTypeField.type}
+      FROM ${componentsTypeTable}
+      ''');
     return result;
   }
+}
+
+class typeandidcomp {
+  int id;
+  String type;
+  typeandidcomp(this.id, this.type);
 }
