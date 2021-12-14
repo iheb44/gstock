@@ -19,6 +19,7 @@ class _insertc extends State<insertc> {
   Widget build(BuildContext context) {
     var now = new DateTime.now();
     var formatter = new DateFormat('dd-MM-yyyy');
+    var itemlist = userDatabase.instance.getTrashlist();
     String formattedDate = formatter.format(now);
 
     return Scaffold(
@@ -48,9 +49,8 @@ class _insertc extends State<insertc> {
                 type = newValue!;
               });
             },
-            items: <String>['One', 'Two', 'Free', 'Four']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
+              itemlist.map<DropdownMenuItem<String>>((String value) {
+               DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
               );

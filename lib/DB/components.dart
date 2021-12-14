@@ -44,4 +44,5 @@ class components {
         date: date ?? this.date,
         quntity: quntity ?? this.quntity,
       );
+
 }

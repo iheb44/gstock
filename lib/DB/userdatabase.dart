@@ -92,4 +92,12 @@ class userDatabase {
     final id = await db.insert(componentsTypeTable, c.toJsonc());
     return c.copyc(id: id);
   }
+  Future<List> getTrashlist() async {
+    final db = await instance.database;
+    final result =
+    await db.rawQuery('''SELECT ${componentsField.type} 
+      FROM ${componentsTable},${componentsTypeTable}
+      WHERE ${componentsField.type} = ${componentsTypeField.id}''');
+    return result;
+  }
 }
