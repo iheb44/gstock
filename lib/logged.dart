@@ -50,12 +50,9 @@ class _loged extends State<loged> {
                 },
               ),
               ListTile(
-                title: const Text('Item 2'),
+                title: const Text('components'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/components');
                 },
               ),
             ],

@@ -4,15 +4,15 @@ import 'DB/components.dart';
 import 'DB/userdatabase.dart';
 
 
-class insertct extends StatefulWidget {
-  State<insertct> createState() => _insertct();
+class insertc extends StatefulWidget {
+  State<insertc> createState() => _insertc();
 }
 
 String type = "";
 String name = "";
 String date = "";
 String quntity = "";
-class _insertct extends State<insertct> {
+class _insertc extends State<insertc> {
   final _formKey = GlobalKey<FormState>();
 
   @override

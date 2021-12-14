@@ -3,6 +3,9 @@ import 'package:gstock/logged.dart';
 import 'package:gstock/login.dart';
 import 'package:gstock/singup.dart';
 
+import 'insertc.dart';
+import 'insertct.dart';
+
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
@@ -19,7 +22,14 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => loged(),
         );
-
+      case '/componentsType':
+        return MaterialPageRoute(
+          builder: (_) => insertct(),
+        );
+      case '/components':
+        return MaterialPageRoute(
+          builder: (_) => insertc(),
+        );
       // If args is not of the correct type, return an error page.
       // You can also throw an exception while in development.
       default:
