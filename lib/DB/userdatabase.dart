@@ -137,3 +137,8 @@ class typeandidcomp {
   String type;
   typeandidcomp(this.id, this.type);
 }
+class userncomp{
+  int idU;
+  int idC;
+  userncomp(this.idU,this.idC);
+}
