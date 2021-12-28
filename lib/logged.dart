@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'DB/userdatabase.dart';
 
 class loged extends StatefulWidget {
   @override
@@ -11,24 +12,51 @@ class _loged extends State<loged> {
   String _username = "";
   String phone = "";
   String password = "";
+  int inser = 1;
 
   @override
   Widget build(BuildContext context) {
+    Future<List> ar() {
+      return userDatabase.instance.getAllComponents();
+    }
     return Scaffold(
         appBar: AppBar(
           // automaticallyImplyLeading: false,
           //backgroundColor: Colors.teal,
-          title: Text("logged"),
+          title: Text("components list"),
         ),
-        body: Center(
-            child: Column(children: [
-          Text("you are logged in"),
+        body:
+            Column(children: [
+              FutureBuilder(
+                future: ar(),
+                builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                  if (snapshot.hasData) {
+                    List ls = snapshot.data!;
+                    List ar = [];
+                    ls.forEach((element) {
+                      ar.add(element);
+                    });
+
+
+                        ListView.builder(
+                            itemCount: ar.length,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child: Text('name :  ${ar[index]['name']}'),
+                              );
+                            });
+                  }
+                  return Text("erro");
+                },
+              ),
           TextButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/');
               },
               child: Text("logout"))
-        ])),
+        ]),
         drawer: Drawer(
           // Add a ListView to the drawer. This ensures the user can scroll
           // through the options in the drawer if there isn't enough vertical

@@ -107,6 +107,12 @@ class userDatabase {
       ''');
     return result;
   }
+  Future<List> getAllComponents() async {
+    final db = await instance.database;
+    final result = await db.rawQuery(
+        '''SELECT * FROM ${componentsTable}''');
+    return result;
+  }
 }
 
 class typeandidcomp {
