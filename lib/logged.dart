@@ -38,13 +38,20 @@ class _loged extends State<loged> {
                     });
 
 
-                        ListView.builder(
+                        return ListView.builder(
                             itemCount: ar.length,
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              return Container(
-                                child: Text('name :  ${ar[index]['name']}'),
+                              return ListTile(
+                                  trailing: TextButton(
+                                    style: ButtonStyle(
+                                      foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                                    ),
+                                    onPressed: () { },
+                                    child: Text('burrow'),
+                                  ),
+                                title: Text('name :  ${ar[index]['name']}'),
                               );
                             });
                   }
