@@ -15,7 +15,7 @@ class userDatabase {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('test4.db');
+    _database = await _initDB('test9.db');
     return _database!;
   }
 
@@ -31,8 +31,8 @@ class userDatabase {
 
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    final textType = 'TEXT NOT NULL';
-    final intType = 'INTEGER NOT NULL';
+    final textType = 'TEXT';
+    final intType = 'INTEGER';
 
     await db.execute('''CREATE TABLE $tableUsers ( 
       ${Userfiled.id} $idType,
@@ -52,7 +52,7 @@ class userDatabase {
 
     await db.execute('''CREATE TABLE $componentsTable (
               ${componentsField.id} $idType ,
-              ${componentsField.id_com}, $intType,
+              ${componentsField.id_com} $intType,
               ${componentsField.name} $textType,
               ${componentsField.date} $textType,
               ${componentsField.quntity} $textType,
@@ -94,7 +94,8 @@ class userDatabase {
   Future<components> createComponents(components c) async {
     final db = await instance.database;
     final id = await db.rawInsert(
-        '''INSERT INTO ${componentsTable}(${componentsField.id_com}, ${componentsField.name}, ${componentsField.date}, ${componentsField.quntity}) VALUES(${c.id_com},${c.name},${c.date},${c.quntity}) ''');
+        'INSERT INTO ${componentsTable} (${componentsField.id_com}, ${componentsField.name}, ${componentsField.date}, ${componentsField.quntity}) VALUES(?, ?, ?, ?)',
+        [c.id_com, c.name, c.date, c.quntity]);
     return c.copyc(id: id);
   }
 
