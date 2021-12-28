@@ -91,10 +91,11 @@ class userDatabase {
     return ct.copyct(id: id);
   }
 
-  void createComponents(components c) async {
+  Future<components> createComponents(components c) async {
     final db = await instance.database;
-    final id = await db.rawQuery(
-        '''INSERT INTO ${componentsTable}(${componentsField.id_com}, ${componentsField.name}, ${componentsField.date}, ${componentsField.quntity} VALUES (?,?,?,?), [${c.id_com},${c.name},${c.date},${c.quntity}]''');
+    final id = await db.rawInsert(
+        '''INSERT INTO ${componentsTable}(${componentsField.id_com}, ${componentsField.name}, ${componentsField.date}, ${componentsField.quntity}) VALUES(${c.id_com},${c.name},${c.date},${c.quntity}) ''');
+    return c.copyc(id: id);
   }
 
   Future<List> getTrashlist() async {
