@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'DB/components.dart';
 import 'DB/userdatabase.dart';
+import 'package:gstock/DB/components.dart';
 
 class insertc extends StatefulWidget {
   State<insertc> createState() => _insertc();
 }
 
-String type = "";
-String name = "";
-String date = "";
-String quntity = "";
-String inser = "";
-
 class _insertc extends State<insertc> {
+  String type = "";
+  String name = "";
+  String date = "";
+  String quntity = "";
+  var inser = 1;
   @override
   Widget build(BuildContext context) {
     var now = new DateTime.now();
@@ -29,40 +29,81 @@ class _insertc extends State<insertc> {
           //backgroundColor: Colors.teal,
           title: Text("Login"),
         ),
-        body: FutureBuilder(
-          future: ar(),
-          builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-            if (snapshot.hasData) {
-              List ls = snapshot.data!;
-              List<String> ar = [];
-              ls.forEach((element) {
-                ar.add(element["type"].toString());
+        body: Column(children: [
+          FutureBuilder(
+            future: ar(),
+            builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+              if (snapshot.hasData) {
+                List ls = snapshot.data!;
+                List ar = [];
+                ls.forEach((element) {
+                  ar.add(element);
+                });
+
+                return Container(
+                  child: DropdownButton(
+                    isExpanded: true,
+                    value: inser,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: ar.map((items) {
+                      return DropdownMenuItem(
+                        value: items["_id"],
+                        child: Text(items["type"]),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        print(newValue);
+                        var newValue2 = newValue.toString();
+                        inser = int.parse(newValue2);
+                      });
+                    },
+                  ),
+                );
+              }
+              return Text("erro");
+            },
+          ),
+          TextFormField(
+            decoration: InputDecoration(labelText: "Product name"),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Familly name is required";
+              }
+              return null;
+            },
+            onChanged: (String value) {
+              setState(() {
+                name = value;
               });
-              ar.map((e) => print(e)).toList();
-              var at = ar;
-              inser = ls[0]["type"].toString();
-              //  print(arn);
-              return Container(
-                child: DropdownButton(
-                  isExpanded: true,
-                  value: inser,
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  items: at.map((String items) {
-                    return DropdownMenuItem(
-                      value: items,
-                      child: Text(items),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      inser = newValue!;
-                    });
-                  },
-                ),
-              );
-            }
-            return Text("erro");
-          },
-        ));
+            },
+          ),
+          TextFormField(
+            decoration: InputDecoration(labelText: "quant"),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Familly name is required";
+              }
+              return null;
+            },
+            onChanged: (String value) {
+              setState(() {
+                quntity = value;
+              });
+            },
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              components comp = new components(
+                  id_com: inser.toString(),
+                  name: name,
+                  date: "date",
+                  quntity: quntity);
+              userDatabase.instance.createComponents(comp);
+              print(comp.toJsonc());
+            },
+            child: const Text('Submit'),
+          ),
+        ]));
   }
 }

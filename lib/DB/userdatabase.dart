@@ -15,14 +15,18 @@ class userDatabase {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('test1.db');
+    _database = await _initDB('test4.db');
     return _database!;
   }
 
   Future<Database> _initDB(String filePath) async {
     final dbpath = await getDatabasesPath();
     final path = join(dbpath, filePath);
-    return (openDatabase(path, version: 1, onCreate: _createDB));
+    return (openDatabase(
+      path,
+      version: 2,
+      onCreate: _createDB,
+    ));
   }
 
   Future _createDB(Database db, int version) async {
@@ -48,7 +52,7 @@ class userDatabase {
 
     await db.execute('''CREATE TABLE $componentsTable (
               ${componentsField.id} $idType ,
-              ${componentsField.type}, $intType,
+              ${componentsField.id_com}, $intType,
               ${componentsField.name} $textType,
               ${componentsField.date} $textType,
               ${componentsField.quntity} $textType,
@@ -87,15 +91,16 @@ class userDatabase {
     return ct.copyct(id: id);
   }
 
-  Future<components> createComponents(components c) async {
+  void createComponents(components c) async {
     final db = await instance.database;
-    final id = await db.insert(componentsTypeTable, c.toJsonc());
-    return c.copyc(id: id);
+    final id = await db.rawQuery(
+        '''INSERT INTO ${componentsTable}(${componentsField.id_com}, ${componentsField.name}, ${componentsField.date}, ${componentsField.quntity} VALUES (?,?,?,?), [${c.id_com},${c.name},${c.date},${c.quntity}]''');
   }
 
   Future<List> getTrashlist() async {
     final db = await instance.database;
-    final result = await db.rawQuery('''SELECT ${componentsTypeField.type}
+    final result = await db.rawQuery(
+        '''SELECT ${componentsTypeField.type},${componentsTypeField.id}
       FROM ${componentsTypeTable}
       ''');
     return result;
