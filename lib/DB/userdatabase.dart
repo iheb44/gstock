@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:gstock/DB/order.dart';
 import 'package:gstock/insertct.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -58,6 +59,16 @@ class userDatabase {
               ${componentsField.quntity} $textType,
               FOREIGN KEY (id_com) REFERENCES componentsType (id)
                 ON DELETE NO ACTION ON UPDATE NO ACTION)''');
+    await db.execute('''CREATE TABLE ORDER (
+    ${orderField.id} $idType,
+    ${orderField.idU} $intType,
+    ${orderField.idC} $intType,
+    ${orderField.dateR} $textType,
+    ${orderField.quntity} $textType,
+    FOREIGN KEY(idU) REFERENCES $tableUsers (id)
+    ON DELETE NO ACTION ON UPDATE NO ACTION),
+    FOREIGN KEY(idC) REFERENCES $componentsTable (id)
+    ON DELETE NO ACTION ON UPDATE NO ACTION))''');
   }
 
   Future<User> getbyUsername(String Username, String pass) async {
@@ -97,6 +108,12 @@ class userDatabase {
         'INSERT INTO ${componentsTable} (${componentsField.id_com}, ${componentsField.name}, ${componentsField.date}, ${componentsField.quntity}) VALUES(?, ?, ?, ?)',
         [c.id_com, c.name, c.date, c.quntity]);
     return c.copyc(id: id);
+  }
+
+  Future<order> createOrder(order o) async {
+    final db = await instance.database;
+    final id = await db.insert(orderTable, o.toJson());
+    return o.copy(id: id);
   }
 
   Future<List> getTrashlist() async {
