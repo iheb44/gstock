@@ -3,6 +3,7 @@ import 'package:gstock/logged.dart';
 import 'package:gstock/login.dart';
 import 'package:gstock/singup.dart';
 
+import 'addorder.dart';
 import 'insertc.dart';
 import 'insertct.dart';
 
@@ -29,6 +30,10 @@ class RouteGenerator {
       case '/components':
         return MaterialPageRoute(
           builder: (_) => insertc(),
+        );
+      case '/order':
+        return MaterialPageRoute(
+          builder: (_) => addorder(),
         );
       // If args is not of the correct type, return an error page.
       // You can also throw an exception while in development.

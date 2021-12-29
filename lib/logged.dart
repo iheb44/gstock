@@ -48,8 +48,10 @@ class _loged extends State<loged> {
                                     style: ButtonStyle(
                                       foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                                     ),
-                                    onPressed: () { },
-                                    child: Text('burrow'),
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, '/order',);
+                                    },
+                                    child: Text('borrow'),
                                   ),
                                 title: Text('name :  ${ar[index]['name']}'),
                               );
