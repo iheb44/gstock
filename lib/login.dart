@@ -63,9 +63,14 @@ class _login extends State<login> {
                   children: [
                     ElevatedButton(
                       onPressed: () async {
-                        User ab = await userDatabase.instance
-                            .getbyUsername(_username, password);
-                        Navigator.pushReplacementNamed(context, '/logged');
+                        bool ab = await userDatabase.instance
+                            .authontif(_username, password);
+                        if (ab == true) {
+                          passlogininfo inf = await userDatabase.instance
+                              .getauthin(_username, password);
+                          Navigator.pushReplacementNamed(context, '/logged',
+                              arguments: inf);
+                        }
                       },
                       child: const Text('Login'),
                     ),

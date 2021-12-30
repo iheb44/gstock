@@ -84,6 +84,33 @@ class userDatabase {
     }
   }
 
+  Future<bool> authontif(String Username, String pass) async {
+    final db = await instance.database;
+    final maps = await db.query(tableUsers,
+        columns: Userfiled.values,
+        where: '  ${Userfiled.username} = ? and ${Userfiled.password} = ?',
+        whereArgs: [Username, pass]);
+    if (maps.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<passlogininfo> getauthin(String Username, String pass) async {
+    final db = await instance.database;
+    final maps = await db.query(tableUsers,
+        columns: Userfiled.values,
+        where: '  ${Userfiled.username} = ? and ${Userfiled.password} = ?',
+        whereArgs: [Username, pass]);
+
+    if (maps.isNotEmpty) {
+      User ur = User.fromJson(maps.first);
+
+      return passlogininfo(ur.id);
+    }
+    throw Exception('user : $Username not found');
+  }
+
   Future Close() async {
     final db = await instance.database;
     db.close();
@@ -124,10 +151,10 @@ class userDatabase {
       ''');
     return result;
   }
+
   Future<List> getAllComponents() async {
     final db = await instance.database;
-    final result = await db.rawQuery(
-        '''SELECT * FROM ${componentsTable}''');
+    final result = await db.rawQuery('''SELECT * FROM ${componentsTable}''');
     return result;
   }
 }
@@ -137,8 +164,21 @@ class typeandidcomp {
   String type;
   typeandidcomp(this.id, this.type);
 }
-class userncomp{
+
+class userncomp {
   int idU;
   int idC;
-  userncomp(this.idU,this.idC);
+  userncomp(this.idU, this.idC);
+}
+
+class passlogininfo {
+  final int? id;
+
+  passlogininfo(this.id);
+}
+
+class orderinfo {
+  final int? id_user;
+  final int? id_prod;
+  orderinfo(this.id_user, this.id_prod);
 }

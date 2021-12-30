@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gstock/logged.dart';
 import 'package:gstock/login.dart';
 import 'package:gstock/singup.dart';
-
+import 'DB/userdatabase.dart';
 import 'addorder.dart';
 import 'insertc.dart';
 import 'insertct.dart';
@@ -20,9 +20,12 @@ class RouteGenerator {
           builder: (_) => singup(),
         );
       case '/logged':
-        return MaterialPageRoute(
-          builder: (_) => loged(),
-        );
+        if (args is passlogininfo) {
+          return MaterialPageRoute(
+            builder: (_) => loged(args.id),
+          );
+        }
+        return _errorRoute();
       case '/componentsType':
         return MaterialPageRoute(
           builder: (_) => insertct(),
@@ -32,9 +35,12 @@ class RouteGenerator {
           builder: (_) => insertc(),
         );
       case '/order':
-        return MaterialPageRoute(
-          builder: (_) => addorder(),
-        );
+        if (args is orderinfo) {
+          return MaterialPageRoute(
+            builder: (_) => addorder(args.id_user, args.id_prod),
+          );
+        }
+        return _errorRoute();
       // If args is not of the correct type, return an error page.
       // You can also throw an exception while in development.
       default:
