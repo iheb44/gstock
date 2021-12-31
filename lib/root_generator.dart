@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gstock/logged.dart';
 import 'package:gstock/login.dart';
+import 'package:gstock/returnorder.dart';
 import 'package:gstock/singup.dart';
 import 'DB/userdatabase.dart';
 import 'addorder.dart';
@@ -39,7 +40,14 @@ class RouteGenerator {
           return MaterialPageRoute(
             builder: (_) => addorder(args.id_user, args.id_prod),
           );
-        }
+        };
+        return _errorRoute();
+      case '/returnorder':
+        if (args is orderinfo) {
+          return MaterialPageRoute(
+            builder: (_) => returnorder(args.id_user),
+          );
+        };
         return _errorRoute();
       // If args is not of the correct type, return an error page.
       // You can also throw an exception while in development.
