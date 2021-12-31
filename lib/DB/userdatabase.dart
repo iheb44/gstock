@@ -16,7 +16,7 @@ class userDatabase {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('test9.db');
+    _database = await _initDB('test13.db');
     return _database!;
   }
 
@@ -59,16 +59,16 @@ class userDatabase {
               ${componentsField.quntity} $textType,
               FOREIGN KEY (id_com) REFERENCES componentsType (id)
                 ON DELETE NO ACTION ON UPDATE NO ACTION)''');
-    await db.execute('''CREATE TABLE ORDER (
-    ${orderField.id} $idType,
-    ${orderField.idU} $intType,
-    ${orderField.idC} $intType,
-    ${orderField.dateR} $textType,
-    ${orderField.quntity} $textType,
-    FOREIGN KEY(idU) REFERENCES $tableUsers (id)
-    ON DELETE NO ACTION ON UPDATE NO ACTION),
-    FOREIGN KEY(idC) REFERENCES $componentsTable (id)
-    ON DELETE NO ACTION ON UPDATE NO ACTION))''');
+    await db.execute('''CREATE TABLE $orderTable (
+              ${orderField.id} $idType,
+              ${orderField.idU} $intType,
+              ${orderField.idC} $intType,
+              ${orderField.dateR} $textType,
+              ${orderField.quntity} $textType,
+              FOREIGN KEY (${orderField.idU}) REFERENCES $tableUsers(id)
+                ON DELETE NO ACTION ON UPDATE NO ACTION,
+              FOREIGN KEY (${orderField.idC}) REFERENCES $componentsTable(id)
+                ON DELETE NO ACTION ON UPDATE NO ACTION)''');
   }
 
   Future<User> getbyUsername(String Username, String pass) async {
@@ -109,6 +109,23 @@ class userDatabase {
       return passlogininfo(ur.id);
     }
     throw Exception('user : $Username not found');
+  }
+
+  Future<components> getcompbyid(int? id) async {
+    final db = await instance.database;
+    final maps = await db.query(componentsTable,
+        columns: componentsField.values,
+        where: '  ${componentsField.id} = ? ',
+        whereArgs: [
+          id,
+        ]);
+
+    if (maps.isNotEmpty) {
+      components ur = components.fromJsonct(maps.first);
+
+      return ur;
+    }
+    throw Exception('user :  not found');
   }
 
   Future Close() async {
@@ -156,6 +173,19 @@ class userDatabase {
     final db = await instance.database;
     final result = await db.rawQuery('''SELECT * FROM ${componentsTable}''');
     return result;
+  }
+
+  Future<order> addorder(order order) async {
+    final db = await instance.database;
+
+    final id = await db.insert(orderTable, order.toJson());
+    return order.copy(id: id);
+  }
+
+  Future<int> updatecomp(components comp) async {
+    final db = await instance.database;
+    return db.update(componentsTable, comp.toJsonc(),
+        where: '${componentsField.id} = ?', whereArgs: [comp.id]);
   }
 }
 

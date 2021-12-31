@@ -1,4 +1,4 @@
-final String orderTable = 'order';
+final String orderTable = 'orders';
 
 class orderField {
   static final List<String> values = [id, idU, idC, dateR, quntity];
@@ -18,30 +18,30 @@ class order {
 
   const order(
       {this.id,
-        required this.idU,
-        required this.idC,
-        required this.dateR,
-        required this.quntity});
-   static order fromJson(Map<String, Object?> json) => order(
-    id: json[orderField.id] as int?,
-    idU: json[orderField.idU] as String,
-    idC: json[orderField.idC] as String,
-    dateR: json[orderField.dateR] as String,
-    quntity: json[orderField.quntity] as String,
-  );
+      required this.idU,
+      required this.idC,
+      required this.dateR,
+      required this.quntity});
+  static order fromJson(Map<String, Object?> json) => order(
+        id: json[orderField.id] as int?,
+        idU: json[orderField.idU] as String,
+        idC: json[orderField.idC] as String,
+        dateR: json[orderField.dateR] as String,
+        quntity: json[orderField.quntity] as String,
+      );
 
-   Map<String, Object?> toJson() => {
-    orderField.id: id,
-    orderField.idU: idU,
-    orderField.idC: idC,
-    orderField.dateR: dateR,
-    orderField.quntity: quntity,
-  };
+  Map<String, Object?> toJson() => {
+        orderField.id: id,
+        orderField.idU: idU,
+        orderField.idC: idC,
+        orderField.dateR: dateR,
+        orderField.quntity: quntity,
+      };
   order copy({int? id}) => order(
-    id: id ?? this.id,
-    idU: idU ?? this.idU,
-    idC: idC ?? this.idC,
-    dateR: dateR ?? this.dateR,
-    quntity: quntity ?? this.quntity,
-  );
+        id: id ?? this.id,
+        idU: idU ?? this.idU,
+        idC: idC ?? this.idC,
+        dateR: dateR ?? this.dateR,
+        quntity: quntity ?? this.quntity,
+      );
 }

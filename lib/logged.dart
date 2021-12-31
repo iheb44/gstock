@@ -44,25 +44,28 @@ class _loged extends State<loged> {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        trailing: TextButton(
-                          style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.blue),
-                          ),
-                          onPressed: () {
-                            int? a = ar[index]['_id'];
+                      if (int.parse(ar[index]["quntity"]) > 0) {
+                        return ListTile(
+                          trailing: TextButton(
+                            style: ButtonStyle(
+                              foregroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.blue),
+                            ),
+                            onPressed: () {
+                              int? a = ar[index]['_id'];
 
-                            Navigator.pushNamed(
-                              context,
-                              '/order',
-                              arguments: orderinfo(widget.id, a),
-                            );
-                          },
-                          child: Text('borrow'),
-                        ),
-                        title: Text('name :  ${ar[index]['name']}'),
-                      );
+                              Navigator.pushNamed(
+                                context,
+                                '/order',
+                                arguments: orderinfo(widget.id, a),
+                              );
+                            },
+                            child: Text('borrow'),
+                          ),
+                          title: Text('name :  ${ar[index]['name']}'),
+                        );
+                      }
+                      return Container();
                     });
               }
               return Text("erro");

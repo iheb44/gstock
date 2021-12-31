@@ -95,10 +95,7 @@ class _insertc extends State<insertc> {
           ElevatedButton(
             onPressed: () async {
               components comp = new components(
-                  id_com: inser.toString(),
-                  name: name,
-                  date: "date",
-                  quntity: quntity);
+                  id_com: inser, name: name, date: "date", quntity: quntity);
               userDatabase.instance.createComponents(comp);
               print(comp.toJsonc());
             },

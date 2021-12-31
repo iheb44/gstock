@@ -11,7 +11,7 @@ class componentsField {
 
 class components {
   final int? id;
-  final String id_com;
+  final int? id_com;
   final String name;
   final String date;
   final String quntity;
@@ -24,7 +24,7 @@ class components {
       required this.quntity});
   static components fromJsonct(Map<String, Object?> json) => components(
         id: json[componentsField.id] as int?,
-        id_com: json[componentsField.id_com] as String,
+        id_com: json[componentsField.id_com] as int?,
         name: json[componentsField.name] as String,
         date: json[componentsField.date] as String,
         quntity: json[componentsField.quntity] as String,
