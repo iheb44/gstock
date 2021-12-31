@@ -40,14 +40,16 @@ class RouteGenerator {
           return MaterialPageRoute(
             builder: (_) => addorder(args.id_user, args.id_prod),
           );
-        };
+        }
+        ;
         return _errorRoute();
       case '/returnorder':
-        if (args is orderinfo) {
+        if (args is int) {
           return MaterialPageRoute(
-            builder: (_) => returnorder(args.id_user),
+            builder: (_) => returnorder(args),
           );
-        };
+        }
+        ;
         return _errorRoute();
       // If args is not of the correct type, return an error page.
       // You can also throw an exception while in development.

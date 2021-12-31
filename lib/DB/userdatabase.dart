@@ -187,16 +187,18 @@ class userDatabase {
     return db.update(componentsTable, comp.toJsonc(),
         where: '${componentsField.id} = ?', whereArgs: [comp.id]);
   }
+
   Future<List> getOwnOrder(int? id) async {
     final db = await instance.database;
-    final result = await db.rawQuery('''SELECT * FROM ${componentsTypeField.id} Where _id = (SELECT ${orderField.idC} FROM ${orderTable} where ${orderField.idU} = ${id})''');
+    final result = await db.rawQuery(
+        '''SELECT * FROM ${orderTable} where ${orderField.idU} = ${id}''');
     return result;
   }
+
   Future<int> deleteOrder(int id) async {
     final db = await instance.database;
     return await db.delete(orderTable, where: '_id = ?', whereArgs: [id]);
   }
-
 }
 
 class typeandidcomp {

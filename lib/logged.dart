@@ -103,6 +103,13 @@ class _loged extends State<loged> {
                   Navigator.pushNamed(context, '/components');
                 },
               ),
+              ListTile(
+                title: const Text('mod'),
+                onTap: () {
+                  Navigator.pushNamed(context, '/returnorder',
+                      arguments: widget.id);
+                },
+              ),
             ],
           ),
         ));
