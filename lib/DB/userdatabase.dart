@@ -16,7 +16,7 @@ class userDatabase {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('test13.db');
+    _database = await _initDB('testFinal.db');
     return _database!;
   }
 
@@ -191,11 +191,21 @@ class userDatabase {
   Future<List> getOwnOrder(int? id) async {
     final db = await instance.database;
     final result = await db.rawQuery(
-        '''SELECT * FROM ${orderTable} where ${orderField.idU} = ${id}''');
+        '''SELECT ${orderTable}.*,${componentsTable}.${componentsField.name} FROM ${orderTable},${componentsTable} where ${orderTable}.${orderField.idU} = ${id} AND ${orderTable}.${orderField.idC} = ${componentsTable}.${componentsField.id} ''');
     return result;
   }
 
-  Future<int> deleteOrder(int id) async {
+  Future<List> notturned() async {
+    final db = await instance.database;
+    final result = await db.rawQuery(
+        '''SELECT ${orderTable}.*,${tableUsers}.${Userfiled.firstName},${tableUsers}.${Userfiled.phone},${componentsTable}.${componentsField.name} 
+         FROM ${orderTable},${tableUsers},${componentsTable} 
+        where  ${orderTable}.${orderField.idU} = ${tableUsers}.${Userfiled.id}
+         AND ${orderTable}.${orderField.idC} = ${componentsTable}.${componentsField.id} ''');
+    return result;
+  }
+
+  Future<int> deleteOrder(int? id) async {
     final db = await instance.database;
     return await db.delete(orderTable, where: '_id = ?', whereArgs: [id]);
   }

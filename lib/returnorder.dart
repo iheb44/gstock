@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gstock/DB/components.dart';
 import 'DB/userdatabase.dart';
 
 class returnorder extends StatefulWidget {
@@ -23,12 +24,13 @@ class _returnorder extends State<returnorder> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          // automaticallyImplyLeading: false,
-          //backgroundColor: Colors.teal,
-          title: Text("return components"),
-        ),
-        body: Column(children: [
+      appBar: AppBar(
+        // automaticallyImplyLeading: false,
+        //backgroundColor: Colors.teal,
+        title: Text("return components"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(children: [
           FutureBuilder(
             future: ar(),
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
@@ -44,25 +46,42 @@ class _returnorder extends State<returnorder> {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                        return ListTile(
-                          trailing: TextButton(
-                            style: ButtonStyle(
-                              foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
-                            ),
-                            onPressed: () {
-                              int? a = ar[index]['_id'];
-
-                              Navigator.pushNamed(
-                                context,
-                                '/loged',
-                                arguments: userDatabase.instance.deleteOrder(a!),
-                              );
-                            },
-                            child: Text('delete'),
+                      return ListTile(
+                        trailing: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.blue),
                           ),
-                          title: Text('name :  ${ar[index]['name']}'),
-                        );
+                          onPressed: () async {
+                            int? a = ar[index]['_id'];
+                            int? idc = ar[index]['idC'];
+
+                            components pullcomp =
+                                await userDatabase.instance.getcompbyid(idc);
+                            int newqu = int.parse(pullcomp.quntity) +
+                                int.parse(ar[index]["quntity"]);
+                            components updatedcomp = new components(
+                                id: pullcomp.id,
+                                id_com: pullcomp.id_com,
+                                name: pullcomp.name,
+                                date: pullcomp.date,
+                                quntity: newqu.toString());
+                            await userDatabase.instance.updatecomp(updatedcomp);
+                            await userDatabase.instance.deleteOrder(a);
+                            passlogininfo pinf =
+                                new passlogininfo(widget.id_user);
+                            Navigator.pushNamed(
+                              context,
+                              '/logged',
+                              arguments: pinf,
+                            );
+                            setState(() {});
+                          },
+                          child: Text('delete'),
+                        ),
+                        title: Text(
+                            'name :  ${ar[index]["name"]} --- ${ar[index]["quntity"]}'),
+                      );
 
                       return Container();
                     });
@@ -71,6 +90,7 @@ class _returnorder extends State<returnorder> {
             },
           ),
         ]),
-        );
+      ),
+    );
   }
 }

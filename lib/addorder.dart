@@ -112,6 +112,12 @@ class _addorder extends State<addorder> {
                             date: oldcomp.date,
                             quntity: a.toString());
                         await userDatabase.instance.updatecomp(upcomp);
+                        passlogininfo pinf = new passlogininfo(widget.id_user);
+                        Navigator.pushNamed(
+                          context,
+                          '/logged',
+                          arguments: pinf,
+                        );
                       }
                     },
                     child: const Text('submit'),

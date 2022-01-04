@@ -53,6 +53,7 @@ class _loged extends State<loged> {
                             ),
                             onPressed: () {
                               int? a = ar[index]['_id'];
+                              setState(() {});
 
                               Navigator.pushNamed(
                                 context,
@@ -94,19 +95,32 @@ class _loged extends State<loged> {
               ListTile(
                 title: const Text('componentsType'),
                 onTap: () {
-                  Navigator.pushNamed(context, '/componentsType');
+                  setState(() {});
+                  Navigator.pushNamed(context, '/componentsType',
+                      arguments: widget.id);
                 },
               ),
               ListTile(
                 title: const Text('components'),
                 onTap: () {
-                  Navigator.pushNamed(context, '/components');
+                  setState(() {});
+                  Navigator.pushNamed(context, '/components',
+                      arguments: widget.id);
                 },
               ),
               ListTile(
                 title: const Text('mod'),
                 onTap: () {
+                  setState(() {});
                   Navigator.pushNamed(context, '/returnorder',
+                      arguments: widget.id);
+                },
+              ),
+              ListTile(
+                title: const Text('Not returend'),
+                onTap: () {
+                  setState(() {});
+                  Navigator.pushNamed(context, '/notreturned',
                       arguments: widget.id);
                 },
               ),

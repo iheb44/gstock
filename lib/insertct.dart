@@ -3,11 +3,14 @@ import 'package:gstock/DB/componentsType.dart';
 import 'DB/userdatabase.dart';
 
 class insertct extends StatefulWidget {
+  int? id_user;
+  insertct(this.id_user);
   State<insertct> createState() => _insertct();
 }
 
-  String type = "";
-  class _insertct extends State<insertct> {
+String type = "";
+
+class _insertct extends State<insertct> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -42,20 +45,25 @@ class insertct extends StatefulWidget {
                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                 child: Center(
                     child: Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            componentsType ct = new componentsType(type: type) ;
-                            userDatabase.instance.createComponentsType(ct);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Sumbimited")),
-                            );
-                            Navigator.pushNamed(context, '/logged');
-                          },
-                          child: const Text('submit'),
-                        ),
-                      ],
-                    )),
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        componentsType ct = new componentsType(type: type);
+                        userDatabase.instance.createComponentsType(ct);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Sumbimited")),
+                        );
+                        passlogininfo pinf = new passlogininfo(widget.id_user);
+                        Navigator.pushNamed(
+                          context,
+                          '/logged',
+                          arguments: pinf,
+                        );
+                      },
+                      child: const Text('submit'),
+                    ),
+                  ],
+                )),
               ),
             ],
           ),

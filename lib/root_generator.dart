@@ -7,6 +7,7 @@ import 'DB/userdatabase.dart';
 import 'addorder.dart';
 import 'insertc.dart';
 import 'insertct.dart';
+import 'notreturnedyet.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -28,13 +29,19 @@ class RouteGenerator {
         }
         return _errorRoute();
       case '/componentsType':
-        return MaterialPageRoute(
-          builder: (_) => insertct(),
-        );
+        if (args is int) {
+          return MaterialPageRoute(
+            builder: (_) => insertct(args),
+          );
+        }
+        return _errorRoute();
       case '/components':
-        return MaterialPageRoute(
-          builder: (_) => insertc(),
-        );
+        if (args is int) {
+          return MaterialPageRoute(
+            builder: (_) => insertc(args),
+          );
+        }
+        return _errorRoute();
       case '/order':
         if (args is orderinfo) {
           return MaterialPageRoute(
@@ -47,6 +54,14 @@ class RouteGenerator {
         if (args is int) {
           return MaterialPageRoute(
             builder: (_) => returnorder(args),
+          );
+        }
+        ;
+        return _errorRoute();
+      case '/notreturned':
+        if (args is int) {
+          return MaterialPageRoute(
+            builder: (_) => notReturned(args),
           );
         }
         ;

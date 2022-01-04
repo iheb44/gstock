@@ -5,6 +5,8 @@ import 'DB/userdatabase.dart';
 import 'package:gstock/DB/components.dart';
 
 class insertc extends StatefulWidget {
+  int? id_user;
+  insertc(this.id_user);
   State<insertc> createState() => _insertc();
 }
 
@@ -98,6 +100,12 @@ class _insertc extends State<insertc> {
                   id_com: inser, name: name, date: "date", quntity: quntity);
               userDatabase.instance.createComponents(comp);
               print(comp.toJsonc());
+              passlogininfo pinf = new passlogininfo(widget.id_user);
+              Navigator.pushNamed(
+                context,
+                '/logged',
+                arguments: pinf,
+              );
             },
             child: const Text('Submit'),
           ),
